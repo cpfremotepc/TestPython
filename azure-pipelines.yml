@@ -1,0 +1,23 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: UsePythonVersion@0
+  displayName: 'Use Python 3'
+  inputs:
+    versionSpec: '3.x'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install openpyxl
+  displayName: 'Install Python dependencies'
+
+- script: |
+    python create_ip_status_excel.py
+  displayName: 'Run Python Script to Create Excel'
